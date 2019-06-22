@@ -1,20 +1,7 @@
 import React from 'react';
-import MapView from 'react-native-maps';
+import Map from './components/map/index';
 
-import { View } from 'react-native';
-
-const App = () => 
-    (<View  style={{ flex: 1 }}> 
-        <MapView 
-            style={{ flex: 1 }}
-            region={{ 
-                latitude: 37.4220,
-                longitude: -122.0840,
-                longitudeDelta: 0.0143,
-                longitudeDelta: 
-             }}
-        />
-    </View>
+const App = () =>  (<Map />
     );
 
 export default App;
