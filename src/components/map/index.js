@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
-import MapView from 'react-native-maps';
-import { View } from 'react-native';
+import React, { Component, Fragment } from 'react';
+import MapView, { Marker } from 'react-native-maps';
+import { View, } from 'react-native';
 
 import Search from '../search';
 import Directions from '../Directions';
+
+import markerImage from '../../assets/marker.png';
 
 
 export default class map extends Component {
@@ -53,20 +55,27 @@ export default class map extends Component {
                 ref={el => this.mapView = el}
             >
                 { destination && (
-                    <Directions
-                        origin={region}
-                        destination={destination}
-                        onReady={result => {
-                            this.mapView.fitToCoordinates(result.coordinates, {
-                                edgePadding: {
-                                right: (50),
-                                left: (50),
-                                top: (50),
-                                bottom: (50)
-                            }
-                            });
-                        }}
-                    />    
+                    <Fragment>
+                        <Directions
+                            origin={region}
+                            destination={destination}
+                            onReady={result => {
+                                this.mapView.fitToCoordinates(result.coordinates, {
+                                    edgePadding: {
+                                    right: (50),
+                                    left: (50),
+                                    top: (50),
+                                    bottom: (50)
+                                }
+                                });
+                            }}
+                        /> 
+                    <Marker 
+                        coordinate={destination}
+                        anchor={{ x: 0, y: 0 }}
+                        image={markerImage}
+                    />
+                    </Fragment>   
                 ) }
 
             </MapView>
