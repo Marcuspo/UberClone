@@ -7,6 +7,8 @@ import Directions from '../Directions';
 
 import markerImage from '../../assets/marker.png';
 
+import { LocationBox, LocationText, LocationTimeBox, LocationTimeText, LocationTimeTextSMALL } from '../map/styles'
+
 
 export default class map extends Component {
 
@@ -74,7 +76,25 @@ export default class map extends Component {
                         coordinate={destination}
                         anchor={{ x: 0, y: 0 }}
                         image={markerImage}
-                    />
+                    >
+                        <LocationBox>
+                            <LocationText>{destination.title}</LocationText>
+                        </LocationBox>
+                    </Marker>
+
+                    <Marker 
+                        coordinate={region}
+                        anchor={{ x: 0, y: 0 }}
+                    >
+                        <LocationBox>
+                            <LocationTimeBox>
+                                <LocationTimeText>31</LocationTimeText>
+                                <LocationTimeTextSMALL>MIN</LocationTimeTextSMALL>
+                            </LocationTimeBox>
+                            <LocationText>Rua 10</LocationText>
+                        </LocationBox>
+                    </Marker>
+
                     </Fragment>   
                 ) }
 
