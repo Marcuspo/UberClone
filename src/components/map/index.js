@@ -5,13 +5,13 @@ import { View, } from 'react-native';
 
 import Search from '../search';
 import Directions from '../Directions';
-
-Geocoder.init('AIzaSyDK16zsRyst46t_fEpaltgTN4eqKRHPUTE')
+import Details from '../Details';
 
 import markerImage from '../../assets/marker.png';
 
 import { LocationBox, LocationText, LocationTimeBox, LocationTimeText, LocationTimeTextSMALL } from '../map/styles'
 
+Geocoder.init('AIzaSyDK16zsRyst46t_fEpaltgTN4eqKRHPUTE');
 
 export default class map extends Component {
 
@@ -19,6 +19,7 @@ export default class map extends Component {
         region: null,
         destination: null,
         duration: null,
+        location: null,
     }
 
     async componentDidMount() {
@@ -26,9 +27,16 @@ export default class map extends Component {
             async ({ coords: { latitude, longitude }}) => {
                 const response = await Geocoder.from({ latitude, longitude });
                 const address = response.results[0].formatted_address;
-                const location = 
+                const location = address.substring(0, address.indexOf(','));
 
-                this.setState({ region: { latitude, longitude, longitudeDelta: 0.0143, latitudeDelta: 0.0134 } })
+                this.setState({ 
+                    location,
+                    region: { 
+                        latitude, longitude, 
+                        longitudeDelta: 0.0143, 
+                        latitudeDelta: 0.0134 
+                    } 
+                })
             },
             () => {},
             {
@@ -53,7 +61,7 @@ export default class map extends Component {
 
   render() {
 
-    const { region, destination, duration } = this.state;
+    const { region, destination, duration, location } = this.state;
 
     return (
         <View  style={{ flex: 1 }}> 
@@ -77,7 +85,7 @@ export default class map extends Component {
                                     right: (50),
                                     left: (50),
                                     top: (50),
-                                    bottom: (50)
+                                    bottom: (350)
                                 }
                                 });
                             }}
@@ -101,7 +109,7 @@ export default class map extends Component {
                                 <LocationTimeText>{duration}</LocationTimeText>
                                 <LocationTimeTextSMALL>MIN</LocationTimeTextSMALL>
                             </LocationTimeBox>
-                            <LocationText>Rua 10</LocationText>
+                            <LocationText>{location}</LocationText>
                         </LocationBox>
                     </Marker>
 
@@ -109,10 +117,9 @@ export default class map extends Component {
                 ) }
 
             </MapView>
+            
+            { destination ? <Details /> : <Search onLocationSelected={this.handleLocationSelected} /> }
 
-            <Search 
-                onLocationSelected={this.handleLocationSelected}
-            />
         </View>
     );
   }
