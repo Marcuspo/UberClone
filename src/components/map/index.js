@@ -8,6 +8,7 @@ export default class map extends Component {
 
     state = {
         region: null,
+        destination: null,
     }
 
     async componentDidMount() {
@@ -24,9 +25,21 @@ export default class map extends Component {
         )
     }
 
+    handleLocationSelected = (data, { geometry }) => {
+        const { location: { lat: latitude, long: longitude }} = geometry;
+
+        this.setState({
+            destination: {
+                latitude,
+                longitude,
+                title: data.structured_formatting.main_text,
+            }
+        })
+    }
+
   render() {
 
-    const { region } = this.state;
+    const { region, destination } = this.state;
 
     return (
         <View  style={{ flex: 1 }}> 
@@ -35,9 +48,15 @@ export default class map extends Component {
                 region={region}
                 showsUserLocation
                 loadingEnabled
-            />
+            >
 
-            <Search />
+                
+
+            </MapView>
+
+            <Search 
+                onLocationSelected={this.handleLocationSelected}
+            />
         </View>
     );
   }
