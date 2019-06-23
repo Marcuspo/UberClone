@@ -16,7 +16,7 @@ export const LocationBox = styled.View`
             margin-top: 20px;
         `,
         android: css`
-            margin-top: 20px;
+            margin-top: 15px;
             margin-left: 5px;
         `
     })}
@@ -29,13 +29,18 @@ export const LocationText = styled.Text`
 `;
 
 export const LocationTimeBox = styled.View`
-
+    background: #222;
+    padding: 3px 8px;
 `;
 
-export const LocationTimeText = styled.View`
-
+export const LocationTimeText = styled.Text`
+    color: #FFF;
+    font-size: 12px;
+    text-align: center;
 `;
 
-export const LocationTimeTextSMALL = styled.View`
-
+export const LocationTimeTextSMALL = styled.Text`
+    color: #FFF;
+    font-size: 10px;
+    text-align: center;
 `;

@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import MapView, { Marker } from 'react-native-maps';
+import Geocoder from 'react-native-geocoding';
 import { View, } from 'react-native';
 
 import Search from '../search';
 import Directions from '../Directions';
+
+Geocoder.init('AIzaSyDK16zsRyst46t_fEpaltgTN4eqKRHPUTE')
 
 import markerImage from '../../assets/marker.png';
 
@@ -15,11 +18,16 @@ export default class map extends Component {
     state = {
         region: null,
         destination: null,
+        duration: null,
     }
 
     async componentDidMount() {
         navigator.geolocation.getCurrentPosition(
-            ({ coords: { latitude, longitude }}) => {
+            async ({ coords: { latitude, longitude }}) => {
+                const response = await Geocoder.from({ latitude, longitude });
+                const address = response.results[0].formatted_address;
+                const location = 
+
                 this.setState({ region: { latitude, longitude, longitudeDelta: 0.0143, latitudeDelta: 0.0134 } })
             },
             () => {},
@@ -45,7 +53,7 @@ export default class map extends Component {
 
   render() {
 
-    const { region, destination } = this.state;
+    const { region, destination, duration } = this.state;
 
     return (
         <View  style={{ flex: 1 }}> 
@@ -62,6 +70,8 @@ export default class map extends Component {
                             origin={region}
                             destination={destination}
                             onReady={result => {
+                                this.setState({ duration: Math.floor(result.duration) });
+
                                 this.mapView.fitToCoordinates(result.coordinates, {
                                     edgePadding: {
                                     right: (50),
@@ -88,7 +98,7 @@ export default class map extends Component {
                     >
                         <LocationBox>
                             <LocationTimeBox>
-                                <LocationTimeText>31</LocationTimeText>
+                                <LocationTimeText>{duration}</LocationTimeText>
                                 <LocationTimeTextSMALL>MIN</LocationTimeTextSMALL>
                             </LocationTimeBox>
                             <LocationText>Rua 10</LocationText>
