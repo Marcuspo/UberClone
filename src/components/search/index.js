@@ -7,7 +7,9 @@ export default class Search extends Component {
         return <GooglePlacesAutocomplete
             placeholder="Para onde?"
             placeholderTextColor="#333"
-            onPress={() => {}}
+            onPress={(data, details) => {
+                console.log(data,details);
+            }}
             query={{
                 key: 'AIzaSyDK16zsRyst46t_fEpaltgTN4eqKRHPUTE',
                 language: 'pt'
