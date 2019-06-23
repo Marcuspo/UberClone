@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import Search from '../search';
 import Directions from '../Directions';
 
+
 export default class map extends Component {
 
     state = {
@@ -58,10 +59,10 @@ export default class map extends Component {
                         onReady={result => {
                             this.mapView.fitToCoordinates(result.coordinates, {
                                 edgePadding: {
-                                right: 50,
-                                left: 50,
-                                top: 50,
-                                bottom: 50
+                                right: (50),
+                                left: (50),
+                                top: (50),
+                                bottom: (50)
                             }
                             });
                         }}
