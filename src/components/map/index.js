@@ -1,15 +1,23 @@
 import React, { Component, Fragment } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
-import { View, } from 'react-native';
+import { View, Image } from 'react-native';
 
 import Search from '../search';
 import Directions from '../Directions';
 import Details from '../Details';
 
 import markerImage from '../../assets/marker.png';
+import backImage from '../../assets/back.png';
 
-import { LocationBox, LocationText, LocationTimeBox, LocationTimeText, LocationTimeTextSMALL } from '../map/styles'
+import {
+    Back, 
+    LocationBox, 
+    LocationText, 
+    LocationTimeBox, 
+    LocationTimeText, 
+    LocationTimeTextSMALL 
+} from '../map/styles'
 
 Geocoder.init('AIzaSyDK16zsRyst46t_fEpaltgTN4eqKRHPUTE');
 
@@ -58,6 +66,10 @@ export default class map extends Component {
             }
         })
     }
+
+    handleBack = () => {
+        this.setState({ destination: null });
+     }
 
   render() {
 
@@ -118,8 +130,15 @@ export default class map extends Component {
 
             </MapView>
             
-            { destination ? <Details /> : <Search onLocationSelected={this.handleLocationSelected} /> }
-
+            { destination ? (
+            <Fragment>
+                <Back onPress={this.handleBack}>
+                    <Image source={backImage} />
+                </Back>
+                <Details />
+            </Fragment>
+            ) : ( 
+                <Search onLocationSelected={this.handleLocationSelected} /> )}
         </View>
     );
   }
