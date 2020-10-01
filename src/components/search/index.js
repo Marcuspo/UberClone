@@ -13,7 +13,7 @@ export default class Search extends Component {
         const { onLocationSelected } = this.props;
 
         return <GooglePlacesAutocomplete
-            placeholder="Para onde?"
+            placeholder="Digite Para onde vamos?"
             placeholderTextColor="#333"
             onPress={onLocationSelected}
             query={{
